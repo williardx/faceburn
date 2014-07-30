@@ -1,0 +1,6 @@
+gmail_email = ""
+gmail_password = ""
+facebook_email = ""
+facebook_password = ""
+phone_number = ""
+carrier = ""
