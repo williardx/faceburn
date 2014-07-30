@@ -45,13 +45,12 @@ def simulate_activity():
 def is_ticket_mentioned(text):
 
     tickets = ["ticket", "tickets", "tix", "pass"]
-    sell = ["sell", "selling", "give", "giving", "rid"]
+    sell = ["sell", "selling", "give", "giving", "rid", "sale", "free"]
+    burning_man = ["burning", "burn", "playa"]
     text = ''.join(ch for ch in text if ch not in punctuation)
     tokens = text.lower().split(" ")
-    print tokens
 
-    return "burning" in tokens \
-           and "man" in tokens \
+    return any(word in burning_man for word in burning_man) \
            and any(word in tokens for word in tickets) \
            and any(word in tokens for word in sell)
 
@@ -83,7 +82,6 @@ def parse_feed(test=False):
     for post in posts:
         soup = BeautifulSoup(post.get_attribute("innerHTML"))
         author_name = soup.select("span.fwb a")[0].getText()
-        print author_name
         post_content = soup.select("div.userContent")[0]
         if post_content:
             post_text_nodes = post_content.select("p")
