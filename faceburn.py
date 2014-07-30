@@ -5,12 +5,14 @@ import smtplib
 import random
 import string
 import sys
+import argparse
 from config import properties, check_config
 from selenium import webdriver
 from bs4 import BeautifulSoup
 
-# setup
-driver = webdriver.Chrome()
+arg_parser = argparse.ArgumentParser()
+arg_parser.add_argument('--test', action='store_true')
+
 punctuation = set(string.punctuation)
 
 def login_facebook():
@@ -74,7 +76,7 @@ def notify(name):
     server.login(properties["gmail_username"], properties["gmail_password"])
     server.sendmail(properties["gmail_username"], sms_email_address, message)
 
-def parse_feed():
+def parse_feed(test=False):
     driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
     time.sleep(3)
     posts = driver.find_elements_by_css_selector(".userContentWrapper")
@@ -88,7 +90,11 @@ def parse_feed():
             post_text = [node.get_text() for node in post_text_nodes]
             if post_text:
                 post_text_joined = " ".join(post_text)
-                if is_ticket_mentioned(post_text_joined):
+                if test:
+                    notification_trigger = test_mention(post_text_joined)
+                else:
+                    notification_trigger = is_ticket_mentioned(post_text_joined)
+                if notification_trigger:
                     notify(author_name)
 
 
@@ -96,11 +102,13 @@ if __name__ == "__main__":
 
     if check_config():
 
+        args = arg_parser.parse_args()
+        driver = webdriver.Chrome()
         login_facebook()
         time.sleep(10)
 
         while True:
-            parse_feed()
+            parse_feed(test=args.test)
             time.sleep(random.randint(10, 30))
             simulate_activity()
             time.sleep(random.randint(30, 60))
