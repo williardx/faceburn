@@ -1,10 +1,11 @@
 #! ./venv/bin/python
 
 import time
-import config
 import smtplib
 import random
 import string
+import sys
+from config import properties, check_config
 from selenium import webdriver
 from bs4 import BeautifulSoup
 
@@ -20,8 +21,8 @@ def login_facebook():
     form_password = driver.find_element_by_css_selector("#pass")
     btn_login = driver.find_element_by_css_selector("#u_0_n")
 
-    form_email.send_keys(config.facebook_email)
-    form_password.send_keys(config.facebook_password)
+    form_email.send_keys(properties["facebook_email"])
+    form_password.send_keys(properties["facebook_password"])
     btn_login.click()
 
 def simulate_activity():
@@ -62,18 +63,16 @@ def notify(name):
 
     message = "%s might be talking about selling Burning Man tickets!" % name
 
-    if config.carrier == "verizon":
+    if properties["carrier"] == "verizon":
         portal = "vtext.com"
-    elif config.carrier == "att":
+    elif properties["carrier"] == "att":
         portal = "txt.att.com"
-    else:
-        pass
 
-    sms_email_address = config.phone_number + "@" + portal
+    sms_email_address = properties["phone_number"] + "@" + portal
     server = smtplib.SMTP("smtp.gmail.com", 587)
     server.starttls()
-    server.login(config.gmail_email, config.gmail_password)
-    server.sendmail(config.gmail_email, sms_email_address, message)
+    server.login(properties["gmail_username"], properties["gmail_password"])
+    server.sendmail(properties["gmail_username"], sms_email_address, message)
 
 def parse_feed():
     driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
@@ -95,13 +94,18 @@ def parse_feed():
 
 if __name__ == "__main__":
 
-    login_facebook()
-    time.sleep(10)
+    if check_config():
 
-    while True:
-        parse_feed()
-        time.sleep(random.randint(10, 30))
-        simulate_activity()
-        time.sleep(random.randint(30, 60))
-        driver.refresh()
-        time.sleep(10) # wait for page to load
+        login_facebook()
+        time.sleep(10)
+
+        while True:
+            parse_feed()
+            time.sleep(random.randint(10, 30))
+            simulate_activity()
+            time.sleep(random.randint(30, 60))
+            driver.refresh()
+            time.sleep(10) # wait for page to reload
+    else:
+        print "Please fill out the config properties correctly!"
+        sys.exit()
