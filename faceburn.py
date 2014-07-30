@@ -25,13 +25,27 @@ def login_facebook():
     btn_login.click()
 
 def simulate_activity():
-    pass
+
+    # pretend to scroll
+    scroll_height = str(random.randint(100,1000))
+    driver.execute_script("window.scrollTo(0, " + scroll_height + ");")
+    time.sleep(3)
+    driver.execute_script("window.scrollTo(0, 0);")
+
+    # start a status update but then kill it
+    textarea_status = driver.find_element_by_id("u_0_1o")
+    message = "knock knock WHO'S THERE " * random.randint(1,5)
+    textarea_status.send_keys(message)
+    time.sleep(3)
+    textarea_status.clear()
 
 def is_ticket_mentioned(text):
 
     tickets = ["ticket", "tickets", "tix", "pass"]
     sell = ["sell", "selling", "give", "giving", "rid"]
+    text = ''.join(ch for ch in text if ch not in punctuation)
     tokens = text.lower().split(" ")
+    print tokens
 
     return "burning" in tokens \
            and "man" in tokens \
@@ -62,6 +76,8 @@ def notify(name):
     server.sendmail(config.gmail_email, sms_email_address, message)
 
 def parse_feed():
+    driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+    time.sleep(3)
     posts = driver.find_elements_by_css_selector(".userContentWrapper")
     for post in posts:
         soup = BeautifulSoup(post.get_attribute("innerHTML"))
@@ -73,15 +89,19 @@ def parse_feed():
             post_text = [node.get_text() for node in post_text_nodes]
             if post_text:
                 post_text_joined = " ".join(post_text)
-                if test_mention(post_text_joined):
+                if is_ticket_mentioned(post_text_joined):
                     notify(author_name)
 
 
 if __name__ == "__main__":
+
     login_facebook()
     time.sleep(10)
+
     while True:
         parse_feed()
-        time.sleep(random.randint(20,30))
+        time.sleep(random.randint(10, 30))
+        simulate_activity()
+        time.sleep(random.randint(30, 60))
         driver.refresh()
-        time.sleep(random.randint(5,10))
+        time.sleep(10) # wait for page to load
