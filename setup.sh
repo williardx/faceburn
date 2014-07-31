@@ -1,3 +1,6 @@
+# install requirements
+pip install -r requirements.txt
+
 # add faceburn directory to path
 currentDirectory=$(pwd)
 
