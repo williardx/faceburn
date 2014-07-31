@@ -68,6 +68,8 @@ def notify(name):
         portal = "vtext.com"
     elif properties["carrier"] == "att":
         portal = "txt.att.com"
+    elif properties["carrier"] == "sprint":
+        portal = "messaging.sprintpcs.com"
 
     sms_email_address = properties["phone_number"] + "@" + portal
     server = smtplib.SMTP("smtp.gmail.com", 587)
