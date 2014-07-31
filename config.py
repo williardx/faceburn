@@ -11,5 +11,4 @@ def check_config():
     for key in properties:
         if not isinstance(properties[key], basestring) or properties[key] == "":
             return False
-        else:
-            return True
+    return True
