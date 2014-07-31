@@ -50,7 +50,7 @@ def is_ticket_mentioned(text):
     text = ''.join(ch for ch in text if ch not in punctuation)
     tokens = text.lower().split(" ")
 
-    return any(word in burning_man for word in burning_man) \
+    return any(word in tokens for word in burning_man) \
            and any(word in tokens for word in tickets) \
            and any(word in tokens for word in sell)
 
