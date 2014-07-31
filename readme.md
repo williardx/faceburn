@@ -35,9 +35,9 @@ Once pip is installed, install virtualenv, a library that creates an isolated en
 
 Now, install all the packages we need: `pip install -r requirements.txt`.
 
-Download Chromedriver (https://code.google.com/p/selenium/wiki/ChromeDriver) and save it to the `faceburn-master` directory you created earlier. Now we'll add faceburn-master to your system's path so that it can find it: first, from `faceburn-master` run `pwd` to get the full path of where you are. Copy the output of that command and run this command: `echo "export PATH=YOUR_PATH_HERE:$PATH" >> ~/.bash_profile`. If you get an error about the file not existing, run `touch ~/.bash_profile` and then try again. Verify that `faceburn-master` is in your path by running `echo $PATH` -- you should see it in there. If successful, run `source ~/.bash_profile`.
+Download Chromedriver (https://code.google.com/p/selenium/wiki/ChromeDriver) and save it to the `faceburn-master` directory you created earlier. Next, we'll add faceburn-master to your system's path so that it can find it: first, from inside of `faceburn-master` run `pwd` to get the full path of where you are. (The right path will end in `faceburn-master`.) Copy the output of that command and run this command: `echo "export PATH=YOUR_PATH_HERE:$PATH" >> ~/.bash_profile`. If you get an error about the file not existing, run `touch ~/.bash_profile` and then try again. Verify that `faceburn-master` is in your path by running `echo $PATH` -- you should see it in there. If successful, run `source ~/.bash_profile`.
 
-The main script is called `faceburn.py`. Change the permissions on `faceburn.py` so that you can run it: `chmod u+x faceburn.py`. Now we're going to need to add your information to `config.py`: run `nano config.py` and add your information. Nano is a lightweight text editor that works mostly as it looks. Add the information between the quotation marks for each property. It should look something like this in the end:
+The main script is called `faceburn.py`. Change the permissions on `faceburn.py` so that you can run it: `chmod u+x faceburn.py`. Next, add your information to `config.py`: run `nano config.py` and add your information in the object called `properties`. Nano is a lightweight text editor that works mostly as it looks. Add the information between the quotation marks for each property. It should look something like this in the end:
 
 ```
 properties = {
@@ -48,6 +48,6 @@ properties = {
 ```
 Once you're done, exit it out of it with CTRL+X, hit `y` to save, and then hit enter.
 
-At this point, everything should be ready to go. Run `./faceburn.py --test` to test the script. If it works, it will open up a Chrome window, log into Facebook, navigate to your news feed, and then send you a text message whenever someone says the word "I" in a post. You should get a bunch of text messages!
+At this point, everything should be ready to go. Run `./faceburn.py --test` to test the script. If it works, it will open up a Chrome window, log into Facebook, navigate to your news feed, and then send you a text message whenever someone says the word "I" in a post. You should get a bunch of text messages! Stop the script by pushing CTRL+C.
 
 Once you know everything is working, run `./faceburn.py` and let the script run. Keep both the Chrome window and terminal window open, otherwise you will stop the script. Enjoy!
