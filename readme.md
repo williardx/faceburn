@@ -13,7 +13,7 @@ Run `setup.sh`, which installs required packages with pip, changes file permissi
 
 Download Chromedriver (https://code.google.com/p/selenium/wiki/ChromeDriver) and save it to the Faceburn working directory.
 
-Fill in your details in `config.py`.
+Fill in your details in `config.py`. Carrier should be "verizon", "att", or "sprint".
 
 Finally, test out the script by running it with the test flag: `./faceburn.py --test`. If the script is working correctly, it will open up a Chrome window, log into Facebook, navigate to your news feed, and then send you a text message whenever someone says the word "I" in a post. You should get a bunch of text messages!
 
@@ -35,7 +35,7 @@ Inside `faceburn-master`, run `chmod 744 setup.sh` and then `./setup.sh`. This w
 
 Download Chromedriver (https://code.google.com/p/selenium/wiki/ChromeDriver) and save it to the `faceburn-master` directory you created earlier. 
 
-Next, add your information to `config.py` using nano, a lightweight text editor: run `nano config.py` and add your information in the object called `properties`. Add the information between the quotation marks for each property. It should look something like this in the end:
+Next, add your information to `config.py` using nano, a lightweight text editor: run `nano config.py` and add your information in the object called `properties`. Add the information between the quotation marks for each property. Carrier should be "verizon", "att", or "sprint". It should look something like this in the end:
 
 ```
 properties = {
