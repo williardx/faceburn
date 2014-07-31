@@ -29,7 +29,7 @@ You should have Python installed by default on a Mac. Check the version with `py
 
 Next we'll install pip, a Python package manager. You'll use it to get libraries that help Faceburn run. Run `sudo easy_install pip`. You'll likely need your password.
 
-Once pip is installed, install virtualenv, a library that creates an isolated environment for you to run Faceburn. Run `sudo pip install virtualenv`. Once that's installed, go into the Faceburn directory (`cd faceburn-master`), create a new virtual environment with `virtualenv venv`. Run `source venv/bin/activate` to use the environment.
+Once pip is installed, install virtualenv, a library that creates an isolated environment for you to run Faceburn. Run `sudo pip install virtualenv`. Once that's installed, go into the Faceburn directory (`cd faceburn-master`), create a new virtual environment with `virtualenv venv`. Run `source venv/bin/activate` to use the environment. If it's working, your terminal prompt should have `(venv)` in front of it.
 
 Inside `faceburn-master`, run `chmod 744 setup.sh` and then `./setup.sh`. This will take care of some of the setup for you.
 
@@ -49,3 +49,7 @@ Once you're done, exit it out of it with CTRL+X, hit y to save, and then hit ent
 At this point, everything should be ready to go. Run `./faceburn.py --test` to test the script. If it works, it will open up a Chrome window, log into Facebook, navigate to your news feed, and then send you a text message whenever someone says the word "I" in a post. You should get a bunch of text messages! Stop the script by pushing CTRL+C.
 
 Once you know everything is working, run `./faceburn.py` and let the script run. Keep both the Chrome window and terminal window open, otherwise you will stop the script. Enjoy!
+
+### Use Notes
+
+Stop the script with CTRL+C. If you close the terminal and reopen it, you'll need to reenter the virtual environment to properly run the script: go into the `faceburn-master` working directory, run `source venv/bin/activate`, and then finally the script: `./faceburn.py`.
